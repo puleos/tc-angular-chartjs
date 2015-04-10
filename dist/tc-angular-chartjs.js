@@ -1,11 +1,11 @@
 /**
- * tc-angular-chartjs - v1.0.9 - 2014-10-14
- * Copyright (c) 2014 Carl Craig <carlcraig@3c-studios.com>
+ * tc-angular-chartjs - v1.0.9 - 2015-04-10
+ * Copyright (c) 2015 Carl Craig <carlcraig@3c-studios.com>
  * Dual licensed with the Apache-2.0 or MIT license.
  */
 (function() {
     "use strict";
-    angular.module("tc.chartjs", []).directive("tcChartjs", TcChartjs).directive("tcChartjsLine", TcChartjsLine).directive("tcChartjsBar", TcChartjsBar).directive("tcChartjsRadar", TcChartjsRadar).directive("tcChartjsPolararea", TcChartjsPolararea).directive("tcChartjsPie", TcChartjsPie).directive("tcChartjsDoughnut", TcChartjsDoughnut).directive("tcChartjsLegend", TcChartjsLegend).factory("TcChartjsFactory", TcChartjsFactory);
+    angular.module("tc.chartjs", []).directive("tcChartjs", TcChartjs).directive("tcChartjsLine", TcChartjsLine).directive("tcChartjsBar", TcChartjsBar).directive("tcChartjsHorizontalBar", TcChartjsHorizontalBar).directive("tcChartjsRadar", TcChartjsRadar).directive("tcChartjsPolararea", TcChartjsPolararea).directive("tcChartjsPie", TcChartjsPie).directive("tcChartjsDoughnut", TcChartjsDoughnut).directive("tcChartjsLegend", TcChartjsLegend).factory("TcChartjsFactory", TcChartjsFactory);
     function TcChartjs(TcChartjsFactory) {
         return new TcChartjsFactory();
     }
@@ -18,6 +18,10 @@
         return new TcChartjsFactory("bar");
     }
     TcChartjsBar.$inject = [ "TcChartjsFactory" ];
+    function TcChartjsHorizontalBar(TcChartjsFactory) {
+        return new TcChartjsFactory("horizontalbar");
+    }
+    TcChartjsHorizontalBar.$inject = [ "TcChartjsFactory" ];
     function TcChartjsRadar(TcChartjsFactory) {
         return new TcChartjsFactory("radar");
     }
@@ -65,6 +69,11 @@
                         autoLegend = true;
                     }
                 }
+                $scope.$on("$destroy", function() {
+                    if (chartObj) {
+                        chartObj.destroy();
+                    }
+                });
                 $scope.$watch("data", function(value) {
                     if (value) {
                         if (chartObj) {
@@ -101,6 +110,9 @@
 
                   case "bar":
                     return "Bar";
+
+                  case "horizontalbar":
+                    return "HorizontalBar";
 
                   case "radar":
                     return "Radar";
