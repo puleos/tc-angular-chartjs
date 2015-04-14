@@ -1,5 +1,5 @@
 /**
- * tc-angular-chartjs - v1.0.9 - 2015-04-10
+ * tc-angular-chartjs - v1.0.9 - 2015-04-14
  * Copyright (c) 2015 Carl Craig <carlcraig@3c-studios.com>
  * Dual licensed with the Apache-2.0 or MIT license.
  */
@@ -86,14 +86,17 @@
                         } else {
                             throw "Error creating chart: Chart type required.";
                         }
-                        for (var n = 0; n < $scope.data.datasets.length; n++) {
-                            if (Array.isArray($scope.data.datasets[n].fillColorExtended)) {
-                                if ($scope.data.datasets[n].fillColorExtended.length === chartObj.datasets[n].bars.length) {
-                                    for (var i = 0; i < chartObj.datasets[n].bars.length; i++) {
-                                        chartObj.datasets[n].bars[i].fillColor = $scope.data.datasets[n].fillColorExtended[i];
+                        if ($scope.data && Array.isArray($scope.data.datasets)) {
+                            for (var n = 0; n < $scope.data.datasets.length; n++) {
+                                if (Array.isArray($scope.data.datasets[n].fillColorExtended)) {
+                                    if ($scope.data.datasets[n].fillColorExtended.length === chartObj.datasets[n].bars.length) {
+                                        for (var i = 0; i < chartObj.datasets[n].bars.length; i++) {
+                                            chartObj.datasets[n].bars[i].fillColor = $scope.data.datasets[n].fillColorExtended[i];
+                                        }
                                     }
                                 }
                             }
+                            chartObj.update();
                         }
                         if (showLegend) {
                             $scope.legend = chartObj.generateLegend();

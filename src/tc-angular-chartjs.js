@@ -111,14 +111,17 @@
               }
 
               // work around chart.js's lack of vision
-              for(var n = 0;n < $scope.data.datasets.length;n++){
-                  if(Array.isArray($scope.data.datasets[n].fillColorExtended)){
-                      if($scope.data.datasets[n].fillColorExtended.length === chartObj.datasets[n].bars.length){
-                        for(var i = 0;i < chartObj.datasets[n].bars.length;i++){
-                          chartObj.datasets[n].bars[i].fillColor = $scope.data.datasets[n].fillColorExtended[i];
+              if($scope.data && Array.isArray($scope.data.datasets)){
+                for(var n = 0;n < $scope.data.datasets.length;n++){
+                    if(Array.isArray($scope.data.datasets[n].fillColorExtended)){
+                        if($scope.data.datasets[n].fillColorExtended.length === chartObj.datasets[n].bars.length){
+                          for(var i = 0;i < chartObj.datasets[n].bars.length;i++){
+                            chartObj.datasets[n].bars[i].fillColor = $scope.data.datasets[n].fillColorExtended[i];
+                          }
                         }
-                      }
-                  }
+                    }
+                }
+                chartObj.update();
               }
 
               if ( showLegend ) {
